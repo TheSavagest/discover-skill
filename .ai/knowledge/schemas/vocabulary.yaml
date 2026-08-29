@@ -1,0 +1,222 @@
+entity_types:
+  - project
+  - solution
+  - dotnet_project
+  - npm_project
+  - package
+  - namespace
+  - module
+  - class
+  - interface
+  - record
+  - struct
+  - enum
+  - method
+  - property
+  - controller
+  - endpoint
+  - middleware
+  - service
+  - repository
+  - validator
+  - handler
+  - background_service
+  - react_app
+  - react_component
+  - react_hook
+  - react_context
+  - react_page
+  - react_route
+  - state_store
+  - api_client
+  - database
+  - schema
+  - table
+  - view
+  - stored_procedure
+  - migration
+  - external_service
+  - api
+  - webhook
+  - message_queue
+  - container
+  - deployment
+  - environment
+  - pipeline
+  - document
+  - adr
+  - git_repository
+  - git_branch
+  - git_tag
+
+predicates:
+  code:
+    - contains
+    - imports
+    - depends_on
+    - references
+    - calls
+    - implements
+    - inherits
+    - overrides
+    - creates
+    - reads
+    - writes
+    - uses
+    - configures
+  architecture:
+    - belongs_to
+    - part_of
+    - exposes
+    - implements
+    - depends_on
+    - communicates_with
+  api:
+    - implements_endpoint
+    - calls_endpoint
+    - consumes_endpoint
+    - produces
+    - authenticated_by
+  data:
+    - maps_to
+    - reads_from
+    - writes_to
+    - persists_to
+    - references_table
+  infrastructure:
+    - deployed_to
+    - runs_in
+    - configured_by
+    - connects_to
+
+confidence_basis:
+  - direct_observation
+  - static_analysis
+  - dynamic_observation
+  - user_statement
+  - documentation
+  - inference
+  - heuristic
+
+confidence_defaults:
+  direct_observation: 1.0
+  static_analysis: 0.95
+  dynamic_observation: 0.9
+  user_statement: 0.9
+  documentation: 0.8
+  inference: 0.7
+  heuristic: 0.5
+
+entity_statuses:
+  - active
+  - inactive
+  - deprecated
+  - deleted
+  - unknown
+  - conflicting
+  - stale
+
+fact_statuses:
+  - active
+  - inactive
+  - deprecated
+  - superseded
+  - conflicting
+  - stale
+
+question_categories:
+  - runtime
+  - architecture
+  - business
+  - security
+  - performance
+  - integration
+  - deployment
+  - data
+  - constraint
+  - ownership
+
+question_priorities:
+  - critical
+  - high
+  - medium
+  - low
+
+question_statuses:
+  - open
+  - answered
+  - resolved
+  - deferred
+  - obsolete
+
+conflict_types:
+  - contradictory_facts
+  - documentation_vs_code
+  - documentation_vs_runtime
+  - source_vs_source
+  - stale_vs_current
+
+conflict_severities:
+  - critical
+  - high
+  - medium
+  - low
+
+conflict_statuses:
+  - unresolved
+  - investigating
+  - resolved
+  - accepted
+  - obsolete
+
+discovery_modes:
+  - full
+  - incremental
+  - targeted
+
+discovery_run_statuses:
+  - in_progress
+  - completed
+  - failed
+  - partial
+  - audited
+
+source_types:
+  - repository
+  - repository_file
+  - git_commit
+  - git_branch
+  - git_tag
+  - documentation
+  - issue
+  - pull_request
+  - database
+  - database_schema
+  - runtime
+  - log
+  - metric
+  - trace
+  - ci
+  - deployment
+  - user
+  - user_answer
+  - external_document
+  - api_specification
+
+evidence_locator_types:
+  - code_range
+  - git_commit
+  - document_section
+  - log_entry
+  - metric_sample
+  - trace_span
+  - user_statement
+  - configuration_value
+
+evidence_observation_types:
+  - text
+  - structured
+  - ast_node
+  - symbol
+  - dependency
+  - metric

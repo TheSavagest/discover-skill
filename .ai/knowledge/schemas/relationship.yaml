@@ -1,0 +1,92 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Relationship
+type: object
+required: [id, from, type, to, evidence, confidence, source_facts, timestamps]
+properties:
+  id:
+    type: string
+    pattern: ^REL-[0-9]{6}$
+  from:
+    type: string
+    pattern: ^ENT-[0-9]{6}$
+  type:
+    type: string
+    enum:
+      - contains
+      - imports
+      - depends_on
+      - references
+      - calls
+      - implements
+      - inherits
+      - overrides
+      - creates
+      - reads
+      - writes
+      - uses
+      - configures
+      - belongs_to
+      - part_of
+      - exposes
+      - communicates_with
+      - implements_endpoint
+      - calls_endpoint
+      - consumes_endpoint
+      - produces
+      - authenticated_by
+      - maps_to
+      - reads_from
+      - writes_to
+      - persists_to
+      - references_table
+      - deployed_to
+      - runs_in
+      - configured_by
+      - connects_to
+  to:
+    type: string
+    pattern: ^ENT-[0-9]{6}$
+  evidence:
+    type: array
+    items:
+      type: string
+      pattern: ^EVD-[0-9]{6}$
+    minItems: 1
+  confidence:
+    type: object
+    required: [score, basis]
+    properties:
+      score:
+        type: number
+        minimum: 0
+        maximum: 1
+      basis:
+        type: array
+        items:
+          type: string
+          enum:
+            - direct_observation
+            - static_analysis
+            - dynamic_observation
+            - user_statement
+            - documentation
+            - inference
+            - heuristic
+        minItems: 1
+  source_facts:
+    type: array
+    items:
+      type: string
+      pattern: ^FACT-[0-9]{6}$
+    minItems: 1
+    description: Facts from which this relationship was projected
+  timestamps:
+    type: object
+    required: [created_at]
+    properties:
+      created_at:
+        type: string
+        format: date-time
+      last_verified_at:
+        type: string
+        format: date-time

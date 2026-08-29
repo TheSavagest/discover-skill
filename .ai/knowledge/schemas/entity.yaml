@@ -1,0 +1,155 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Entity
+type: object
+required: [id, type, name, canonical_name, source, location, evidence, confidence, status, discovered_by, timestamps]
+properties:
+  id:
+    type: string
+    pattern: ^ENT-[0-9]{6}$
+    description: Stable unique identifier
+  type:
+    type: string
+    enum:
+      - project
+      - solution
+      - dotnet_project
+      - npm_project
+      - package
+      - namespace
+      - module
+      - class
+      - interface
+      - record
+      - struct
+      - enum
+      - method
+      - property
+      - controller
+      - endpoint
+      - middleware
+      - service
+      - repository
+      - validator
+      - handler
+      - background_service
+      - react_app
+      - react_component
+      - react_hook
+      - react_context
+      - react_page
+      - react_route
+      - state_store
+      - api_client
+      - database
+      - schema
+      - table
+      - view
+      - stored_procedure
+      - migration
+      - external_service
+      - api
+      - webhook
+      - message_queue
+      - container
+      - deployment
+      - environment
+      - pipeline
+      - document
+      - adr
+      - git_repository
+      - git_branch
+      - git_tag
+    description: Controlled vocabulary of entity types
+  name:
+    type: string
+    description: Human-readable name
+  canonical_name:
+    type: string
+    description: Fully qualified name (namespace + name for code)
+  source:
+    type: string
+    pattern: ^SRC-[0-9]{6}$
+    description: Reference to Source entity
+  location:
+    type: object
+    required: [path]
+    properties:
+      path:
+        type: string
+      revision:
+        type: string
+      start_line:
+        type: integer
+        minimum: 1
+      end_line:
+        type: integer
+        minimum: 1
+      start_column:
+        type: integer
+        minimum: 1
+      end_column:
+        type: integer
+        minimum: 1
+  metadata:
+    type: object
+    additionalProperties: true
+    description: Type-specific metadata (namespace, language, etc.)
+  evidence:
+    type: array
+    items:
+      type: string
+      pattern: ^EVD-[0-9]{6}$
+    minItems: 1
+    description: Evidence supporting this entity's existence
+  confidence:
+    type: object
+    required: [score, basis]
+    properties:
+      score:
+        type: number
+        minimum: 0
+        maximum: 1
+      basis:
+        type: array
+        items:
+          type: string
+          enum:
+            - direct_observation
+            - static_analysis
+            - dynamic_observation
+            - user_statement
+            - documentation
+            - inference
+            - heuristic
+        minItems: 1
+  status:
+    type: string
+    enum:
+      - active
+      - inactive
+      - deprecated
+      - deleted
+      - unknown
+      - conflicting
+      - stale
+  discovered_by:
+    type: object
+    required: [agent, skill, run]
+    properties:
+      agent:
+        type: string
+      skill:
+        type: string
+      run:
+        type: string
+        pattern: ^RUN-[0-9]{6}$
+  timestamps:
+    type: object
+    required: [discovered_at]
+    properties:
+      discovered_at:
+        type: string
+        format: date-time
+      last_verified_at:
+        type: string
+        format: date-time

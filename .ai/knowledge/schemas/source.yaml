@@ -1,0 +1,68 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Source
+type: object
+required: [id, type, uri, access, timestamps]
+properties:
+  id:
+    type: string
+    pattern: ^SRC-[0-9]{6}$
+  type:
+    type: string
+    enum:
+      - repository
+      - repository_file
+      - git_commit
+      - git_branch
+      - git_tag
+      - documentation
+      - issue
+      - pull_request
+      - database
+      - database_schema
+      - runtime
+      - log
+      - metric
+      - trace
+      - ci
+      - deployment
+      - user
+      - user_answer
+      - external_document
+      - api_specification
+  uri:
+    type: string
+    description: Unique identifier for the source (file://, git://, etc.)
+  repository:
+    type: object
+    properties:
+      path:
+        type: string
+      revision:
+        type: string
+  metadata:
+    type: object
+    additionalProperties: true
+  access:
+    type: object
+    required: [available]
+    properties:
+      available:
+        type: boolean
+      limitation:
+        type: string
+        enum:
+          - none
+          - read_only
+          - partial
+          - requires_credentials
+          - offline
+  timestamps:
+    type: object
+    required: [observed_at]
+    properties:
+      observed_at:
+        type: string
+        format: date-time
+      last_accessed_at:
+        type: string
+        format: date-time

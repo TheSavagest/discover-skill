@@ -1,0 +1,104 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Question
+type: object
+required: [id, question, category, context, reason, priority, blocking, status, generated_by, timestamps]
+properties:
+  id:
+    type: string
+    pattern: ^Q-[0-9]{6}$
+  question:
+    type: string
+    description: The question text
+  category:
+    type: string
+    enum:
+      - runtime
+      - architecture
+      - business
+      - security
+      - performance
+      - integration
+      - deployment
+      - data
+      - constraint
+      - ownership
+  context:
+    type: object
+    properties:
+      entities:
+        type: array
+        items:
+          type: string
+          pattern: ^ENT-[0-9]{6}$
+      facts:
+        type: array
+        items:
+          type: string
+          pattern: ^FACT-[0-9]{6}$
+      conflicts:
+        type: array
+        items:
+          type: string
+          pattern: ^CON-[0-9]{6}$
+  reason:
+    type: string
+    description: Why this question needs to be answered
+  priority:
+    type: string
+    enum:
+      - critical
+      - high
+      - medium
+      - low
+  blocking:
+    type: boolean
+    description: Whether discovery cannot proceed without this answer
+  status:
+    type: string
+    enum:
+      - open
+      - answered
+      - resolved
+      - deferred
+      - obsolete
+  answer:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+          - user
+          - inferred
+          - documentation
+          - runtime
+      value:
+        type: string
+      evidence:
+        type: array
+        items:
+          type: string
+          pattern: ^EVD-[0-9]{6}$
+      answered_at:
+        type: string
+        format: date-time
+      answered_by:
+        type: string
+  generated_by:
+    type: object
+    required: [agent, run]
+    properties:
+      agent:
+        type: string
+      run:
+        type: string
+        pattern: ^RUN-[0-9]{6}$
+  timestamps:
+    type: object
+    required: [created_at]
+    properties:
+      created_at:
+        type: string
+        format: date-time
+      resolved_at:
+        type: string
+        format: date-time

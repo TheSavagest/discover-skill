@@ -1,0 +1,100 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: DiscoveryRun
+type: object
+required: [id, project, started_at, mode, agents, sources, statistics, status]
+properties:
+  id:
+    type: string
+    pattern: ^RUN-[0-9]{6}$
+  project:
+    type: object
+    required: [repository, revision]
+    properties:
+      repository:
+        type: string
+        pattern: ^SRC-[0-9]{6}$
+      revision:
+        type: string
+      branch:
+        type: string
+  previous_run_id:
+    type: string
+    pattern: ^RUN-[0-9]{6}$
+    description: Previous run for incremental discovery
+  started_at:
+    type: string
+    format: date-time
+  completed_at:
+    type: string
+    format: date-time
+  mode:
+    type: string
+    enum:
+      - full
+      - incremental
+      - targeted
+  agents:
+    type: array
+    items:
+      type: string
+      enum:
+        - project-discovery
+        - backend-discovery
+        - frontend-discovery
+        - api-discovery
+        - data-discovery
+        - integration-discovery
+        - infrastructure-discovery
+        - git-discovery
+        - documentation-discovery
+        - runtime-discovery
+        - relationship-discovery
+        - knowledge-consolidator
+        - discovery-auditor
+        - user-discovery
+  sources:
+    type: object
+    required: [available, unavailable]
+    properties:
+      available:
+        type: array
+        items:
+          type: string
+      unavailable:
+        type: array
+        items:
+          type: string
+  statistics:
+    type: object
+    required: [entities, facts, evidence, relationships, questions, conflicts]
+    properties:
+      entities:
+        type: integer
+        minimum: 0
+      facts:
+        type: integer
+        minimum: 0
+      evidence:
+        type: integer
+        minimum: 0
+      relationships:
+        type: integer
+        minimum: 0
+      questions:
+        type: integer
+        minimum: 0
+      conflicts:
+        type: integer
+        minimum: 0
+      confidence_avg:
+        type: number
+        minimum: 0
+        maximum: 1
+  status:
+    type: string
+    enum:
+      - in_progress
+      - completed
+      - failed
+      - partial
+      - audited

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "discover/orchestrator",
+  "agent": {
+    "discover/orchestrator": {
+      "mode": "primary"
+    }
+  },
+  "permission": {
+    "skill": {
+      "discover-*": "allow"
+    }
+  }
+}

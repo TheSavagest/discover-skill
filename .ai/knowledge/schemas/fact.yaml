@@ -1,0 +1,135 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Fact
+type: object
+required: [id, subject, predicate, object, evidence, confidence, status, discovered_by, timestamps]
+properties:
+  id:
+    type: string
+    pattern: ^FACT-[0-9]{6}$
+  subject:
+    type: object
+    required: [entity]
+    properties:
+      entity:
+        type: string
+        pattern: ^ENT-[0-9]{6}$
+  predicate:
+    type: string
+    enum:
+      - contains
+      - imports
+      - depends_on
+      - references
+      - calls
+      - implements
+      - inherits
+      - overrides
+      - creates
+      - reads
+      - writes
+      - uses
+      - configures
+      - belongs_to
+      - part_of
+      - exposes
+      - communicates_with
+      - implements_endpoint
+      - calls_endpoint
+      - consumes_endpoint
+      - produces
+      - authenticated_by
+      - maps_to
+      - reads_from
+      - writes_to
+      - persists_to
+      - references_table
+      - deployed_to
+      - runs_in
+      - configured_by
+      - connects_to
+  object:
+    type: object
+    required: [kind]
+    oneOf:
+      - required: [entity]
+        properties:
+          kind:
+            type: string
+            const: entity
+          entity:
+            type: string
+            pattern: ^ENT-[0-9]{6}$
+      - required: [value]
+        properties:
+          kind:
+            type: string
+            const: value
+          value:
+            type:
+              - string
+              - number
+              - boolean
+              - null
+  evidence:
+    type: array
+    items:
+      type: string
+      pattern: ^EVD-[0-9]{6}$
+    minItems: 1
+  confidence:
+    type: object
+    required: [score, basis]
+    properties:
+      score:
+        type: number
+        minimum: 0
+        maximum: 1
+      basis:
+        type: array
+        items:
+          type: string
+          enum:
+            - direct_observation
+            - static_analysis
+            - dynamic_observation
+            - user_statement
+            - documentation
+            - inference
+            - heuristic
+        minItems: 1
+  status:
+    type: string
+    enum:
+      - active
+      - inactive
+      - deprecated
+      - superseded
+      - conflicting
+      - stale
+  discovered_by:
+    type: object
+    required: [agent, skill, run]
+    properties:
+      agent:
+        type: string
+      skill:
+        type: string
+      run:
+        type: string
+        pattern: ^RUN-[0-9]{6}$
+  timestamps:
+    type: object
+    required: [observed_at]
+    properties:
+      observed_at:
+        type: string
+        format: date-time
+      superseded_at:
+        type: string
+        format: date-time
+  supersedes:
+    type: array
+    items:
+      type: string
+      pattern: ^FACT-[0-9]{6}$
+    description: IDs of facts this fact supersedes (for versioning)

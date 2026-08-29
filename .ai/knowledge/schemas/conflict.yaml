@@ -1,0 +1,80 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Conflict
+type: object
+required: [id, subject, claims, type, severity, status, detected_by, timestamps]
+properties:
+  id:
+    type: string
+    pattern: ^CON-[0-9]{6}$
+  subject:
+    type: string
+    pattern: ^ENT-[0-9]{6}$
+  claims:
+    type: array
+    items:
+      type: string
+      pattern: ^FACT-[0-9]{6}$
+    minItems: 2
+    description: Conflicting fact IDs
+  type:
+    type: string
+    enum:
+      - contradictory_facts
+      - documentation_vs_code
+      - documentation_vs_runtime
+      - source_vs_source
+      - stale_vs_current
+  severity:
+    type: string
+    enum:
+      - critical
+      - high
+      - medium
+      - low
+  status:
+    type: string
+    enum:
+      - unresolved
+      - investigating
+      - resolved
+      - accepted
+      - obsolete
+  resolution:
+    type: object
+    properties:
+      decision:
+        type: string
+      resolved_facts:
+        type: array
+        items:
+          type: string
+          pattern: ^FACT-[0-9]{6}$
+      evidence:
+        type: array
+        items:
+          type: string
+          pattern: ^EVD-[0-9]{6}$
+      resolved_at:
+        type: string
+        format: date-time
+      resolved_by:
+        type: string
+  detected_by:
+    type: object
+    required: [agent, run]
+    properties:
+      agent:
+        type: string
+      run:
+        type: string
+        pattern: ^RUN-[0-9]{6}$
+  timestamps:
+    type: object
+    required: [created_at]
+    properties:
+      created_at:
+        type: string
+        format: date-time
+      resolved_at:
+        type: string
+        format: date-time
